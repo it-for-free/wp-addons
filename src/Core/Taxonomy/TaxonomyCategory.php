@@ -41,4 +41,39 @@ class TaxonomyCategory
         }
         return $result;
     }
+    
+    
+    /**
+     * Список всех родителей (ветка в дереве иерархии)
+     *  для данной категории таксономии
+     * 
+     * @param WP_Term $WP_Term  элемент таксономии
+     * @return WP_Term[]
+     */
+    public static function getParentsList($WP_Term)
+    {
+        $parents = array();
+        $Category = $WP_Term;
+        while ($Category = static::getParent($Category)) {
+           $parents[] = $Category;
+        }
+        
+        if (!empty($parents)) {
+            $parents = array_reverse($parents);
+        }
+        
+        return $parents;
+    }
+    
+    
+    /**
+     * Вернёт объект таксономии,  к которой относится переданный элемент $WP_Term
+     * 
+     * @param WP_Term $WP_Term  элемент таксономии
+     * @return WP_Taxonomy|false
+     */
+    public static function getTaxonomy($WP_Term)
+    {
+        return get_taxonomy($WP_Term->taxonomy);
+    }
 }
