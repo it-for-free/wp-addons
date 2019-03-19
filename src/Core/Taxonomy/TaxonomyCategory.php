@@ -1,6 +1,6 @@
 <?php
 
-namespace ItForFree\WpAddons\Core;
+namespace ItForFree\WpAddons\Core\Taxonomy;
 
 /**
  * Класс для работы с категрией (конкретной записью, таксономии)

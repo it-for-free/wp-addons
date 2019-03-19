@@ -2,6 +2,8 @@
 
 namespace ItForFree\WpAddons\Modules\HierarhicalUrls;
 
+use ItForFree\WpAddons\Core\Taxonomy\TaxonomyCategory;
+
 /**
  * Иерархические ссылки для категорий пользовательской таксономии и пользовательского типа контента.
  */
@@ -35,7 +37,7 @@ class HierarhicalUrls
                  if (!empty($taxonomyItems)) {
                      $firstRelatedTaxonomyItem = array_pop($taxonomyItems);
                      $post_link = str_replace("%$taxonomyName%", 
-                             TaxonomyCategory::getHierarhicalUrl($firstRelatedTaxonomyItem), $post_link);
+                            TaxonomyCategory::getHierarhicalUrl($firstRelatedTaxonomyItem), $post_link);
                  } else {
                      $post_link = str_replace("%$taxonomyName%", 'uncategorized', $post_link);
                  }
