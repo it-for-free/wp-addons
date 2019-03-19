@@ -1,2 +1,4 @@
 # wp-addons
-wordpress useful code
+
+* wordpress useful code
+* дополнения для wordpress

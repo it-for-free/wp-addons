@@ -1,0 +1,13 @@
+{
+    "name": "it-for-free/wp-addons",
+    "type": "cms",
+    "description": "wordpress addons",
+    "keywords": ["wordpress", "wp", "addons module"],
+    "homepage": "http://fkn.ktu10.com/?q=node/4191",
+     
+    "autoload": {
+        "psr-4": {
+            "ItForFree\\WpAddons\\": "src"
+        }
+    } 
+}
