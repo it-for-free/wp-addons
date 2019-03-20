@@ -69,11 +69,11 @@ class TaxonomyCategory
     /**
      * Вернёт объект таксономии,  к которой относится переданный элемент $WP_Term
      * 
-     * @param WP_Term $WP_Term  элемент таксономии
-     * @return WP_Taxonomy|false
+     * @param WP_Term $WP_Term элемент таксономии (стандартный для WP)
+     * @return \ItForFree\WpAddons\Core\Taxonomy\Taxonomy|false
      */
     public static function getTaxonomy($WP_Term)
     {
-        return get_taxonomy($WP_Term->taxonomy);
+        return  Taxonomy::getByName($WP_Term->taxonomy);
     }
 }

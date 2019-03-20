@@ -3,6 +3,7 @@
 namespace ItForFree\WpAddons\Modules\HierarhicalUrls;
 
 use ItForFree\WpAddons\Core\Taxonomy\TaxonomyCategory;
+use ItForFree\WpAddons\Core\Post\Post;
 
 /**
  * Иерархические ссылки для категорий пользовательской таксономии и пользовательского типа контента.
@@ -33,9 +34,8 @@ class HierarhicalUrls
         $postLinkHandler = function ($post_link, $post, $leavename, $sample) use ($taxonomyName) 
         {
              if (false !== strpos($post_link, "%$taxonomyName%")) {
-                 $taxonomyItems = get_the_terms($post->ID, $taxonomyName);
-                 if (!empty($taxonomyItems)) {
-                     $firstRelatedTaxonomyItem = array_pop($taxonomyItems);
+                 $firstRelatedTaxonomyItem = Post::getFirstTaxonomyItem($post, $taxonomyName);
+                 if (!empty($firstRelatedTaxonomyItem)) {
                      $post_link = str_replace("%$taxonomyName%", 
                             TaxonomyCategory::getHierarhicalUrl($firstRelatedTaxonomyItem), $post_link);
                  } else {
@@ -100,7 +100,7 @@ class HierarhicalUrls
         add_filter('generate_rewrite_rules', $taxonomyRewriteRouteHandler, 0);
     }
     
-        public static function bkr()
+    public static function bkr()
     {
         
          if ( is_tax() ) {
