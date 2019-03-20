@@ -11,8 +11,6 @@ use ItForFree\WpAddons\Core\Post\Post;
  */
 class Breadcrumbs
 {
-    
-
     /**
      * Построит хлебные крошки  для текущей страницы таксономии или для переданного элемента
      * 
