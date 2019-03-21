@@ -30,7 +30,7 @@ class HierarhicalUrls
      */
     protected function setHierarhicalPostLinks($taxonomyName) 
     {
-        
+       
         $postLinkHandler = function ($post_link, $post, $leavename, $sample) use ($taxonomyName) 
         {
              if (false !== strpos($post_link, "%$taxonomyName%")) {
@@ -91,7 +91,7 @@ class HierarhicalUrls
             }
             // merge with global rules
         //    ppre('------------');
-            ppre($rules);
+//            ppre($rules);
             $wp_rewrite->rules = $rules + $wp_rewrite->rules;
 //            ppre($wp_rewrite->rules);
         };

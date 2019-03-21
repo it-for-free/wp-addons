@@ -53,10 +53,12 @@ class Breadcrumbs
     public static function getForPost($WP_Post, $taxonomyName)
     {
         $Term = Post::getFirstTaxonomyItem($WP_Post, $taxonomyName);
-        $Bcmrs = static::getForTaxonomyItem($Term);
-        $Bcmrs->add($Term->name, static::getUrlForTerm($Term)); // добавляем непосредственного родителя нашей записи
-        $Bcmrs->current = $WP_Post->post_title; // устанавливаем имя
-
+        
+        if (!empty($Term)) {
+            $Bcmrs = static::getForTaxonomyItem($Term);
+            $Bcmrs->add($Term->name, static::getUrlForTerm($Term)); // добавляем непосредственного родителя нашей записи
+            $Bcmrs->current = $WP_Post->post_title; // устанавливаем имя
+        }
         return  $Bcmrs;
     }
     

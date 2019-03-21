@@ -1,6 +1,7 @@
 <?php
 
 namespace ItForFree\WpAddons\Core\Post;
+use ItForFree\WpAddons\Core\Common\WP;
 
 /**
  * Класс для работы с конкретной записью (WP_Post) 
@@ -19,10 +20,10 @@ class Post
     public static function getFirstTaxonomyItem($WP_Post, $taxonomyName)
     {
         $taxonomyItems = get_the_terms($WP_Post->ID, $taxonomyName);
-        if (!empty($taxonomyItems)) {
+        if (WP::notEmptyNotError($taxonomyItems)) {
             return $taxonomyItems[0];
          } else {
-             return false;
+            return false;
          }
     }
 }
