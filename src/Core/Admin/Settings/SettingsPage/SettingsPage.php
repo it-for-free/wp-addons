@@ -2,6 +2,8 @@
 
 namespace  ItForFree\WpAddons\Core\Admin\Settings\SettingsPage;
 
+use ItForFree\WpAddons\Core\Exception\WpAddonsCoreException;
+
 /**
  * Класс для описания страницы раздела "Настройки".
  * 
@@ -24,7 +26,14 @@ class SettingsPage
     /**
      * @var string url-имя страниц 
      */
-    protected $slug = '';   
+    protected $slug = '';
+    
+    /**
+     *
+     * @var srting Заголовок фромы настроек
+     */
+    protected $formTitle = '';
+    
     
     /**
      * Группа настроек даной страницы
@@ -48,7 +57,7 @@ class SettingsPage
      * 
      * @params string $optionPageUniqueId
      */
-    public function __construct($optionPageUniqueId, $title, $menuTitle, $capability = 'manage_options' ) {
+    public function __construct($optionPageUniqueId, $title, $menuTitle, $formTitle = 'Настройки плагина', $capability = 'manage_options' ) {
         
         if (!empty($optionPageUniqueId)) {
             
@@ -56,12 +65,13 @@ class SettingsPage
             $this->title = $title;
             $this->menuTitle = $menuTitle;
             $this->capability = $capability;
+            $this->formTitle = $formTitle;
             
             $this->slug = $this->pageIdStr . '-options-page';
             
            $this->register();
         } else {
-           throw new \Exception('Не передан id страницы!'); 
+           throw new WpAddonsCoreException('Не передан id страницы!'); 
         }
     }
     
@@ -133,8 +143,10 @@ class SettingsPage
         $settingsPageSlug = $this->slug;
         $capability = $this->capability;
         $SettingsEntity = $this->settingsEntity;
+        $formTitle = $this->formTitle;
          
-        $printPageContent = function() use ($settingsPageSlug, $capability, $SettingsEntity) {
+        $printPageContent = function() use ($settingsPageSlug, $capability, 
+            $SettingsEntity, $formTitle) {
             if (!current_user_can($capability)) {
                 wp_die('У вас нет прав на доступ к этой странице.');
     //            $options = get_option('htpu_options');
@@ -143,7 +155,7 @@ class SettingsPage
             if (!empty($SettingsEntity)) { 
                 ?>
                 <div class="wrap">
-                    <h2><?php echo 'Hierarchical URLs'; ?></h2>
+                    <h2><?php echo $formTitle; ?></h2>
                     <form method="post" action="options.php">
                         <?php settings_fields($SettingsEntity->getGroupName()); ?>
                         <?php do_settings_sections($settingsPageSlug); ?>
