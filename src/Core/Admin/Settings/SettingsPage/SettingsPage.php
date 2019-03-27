@@ -9,7 +9,8 @@ namespace  ItForFree\WpAddons\Core\Admin\Settings\SettingsPage;
  * 
  * В основе идеи пример: http://fkn.ktu10.com/?q=node/10801
  */
-class SettingsPage {
+class SettingsPage 
+{
     
     protected $pageIdStr = '';
     protected $title = 'Заголовок страницы';
@@ -23,8 +24,7 @@ class SettingsPage {
     /**
      * @var string url-имя страниц 
      */
-    protected $slug = '';
-    
+    protected $slug = '';   
     
     /**
      * Группа настроек даной страницы
@@ -32,7 +32,18 @@ class SettingsPage {
      */
     protected $settingsEntity;
     
-
+    /**
+     * Поля секций
+     * @var \ItForFree\WpAddons\Core\Admin\Settings\SettingsPage\Section\Filed\BaseSectionField[] 
+     */
+    protected $sectionFields;
+    
+    /**
+     * Секции страницы
+     * @var \ItForFree\WpAddons\Core\Admin\Settings\SettingsPage\Section\SettingsPageSection[]
+     */
+    protected $sections;
+    
     /**
      * 
      * @params string $optionPageUniqueId
@@ -75,26 +86,42 @@ class SettingsPage {
         return $this->slug;
     }
 
-    
+    /**
+     * Регистрирует страницу и все добавленные на неё сущности
+     * (автоматически проводит регистрацию как минимум: настройки, секций и полей)
+     * 
+     * ВНИМАНИЕ: вызывайте этот метод после добавления всех сущностей
+     */
     public function register()
     {
-
         $this->registerPagePrint();
-        
+        $this->registerPageItems();
 
     }
     
+    /**
+     * Регистрация сущностей страницы средствами WP API 
+     */
     protected function registerPageItems()
     {
-        add_action('admin_init', 'htpu_register_settings');
-        
-        
-        function htpu_register_settings() {
-            register_setting('htpu_options', 'htpu_options', 'htpu_options_validate');
+        $settingsEntity = $this->settingsEntity;
+        $sections = $this->sections;
+        $fields = $this->sectionFields;
 
-            add_settings_section('htpu_settings', 'Используемые таксономии', 'htpu_section_text', 'htpu-options');
-            add_settings_field('htpu_checked_taxonomies', 'Включить плагин для таксономий:', 'htpu_checked_taxonomies', 'htpu-options', 'htpu_settings');
-        }
+        $registerPageItemsCallback = function() use ($settingsEntity, $sections, $fields) {
+
+            $settingsEntity->register();
+            
+            foreach ($sections as $Section) {
+                $Section->register();
+            }
+            foreach ($fields as $Field) {
+                 $Field->register();
+                
+            }
+        };
+        
+        add_action('admin_init', $registerPageItemsCallback);
     }
     
     
@@ -141,10 +168,23 @@ class SettingsPage {
         $this->settingsEntity = $SettingsEntity; 
     }
     
+    /**
+     * Добавление секции на страницу
+     * 
+     * @param \ItForFree\WpAddons\Core\Admin\Settings\SettingsPage\Section\SettingsPageSection $SettingsPageSection
+     */
     public function addSection($SettingsPageSection)
     {
-        $this->sections = $SettingsPageSection; 
+        $this->sections[] = $SettingsPageSection; 
     }
-
     
+    /**
+     * Добавление поля секции на страницу
+     * 
+     * @param \ItForFree\WpAddons\Core\Admin\Settings\SettingsPage\Section\Filed\BaseSectionField $SectionField
+     */
+    public function addSectionField($SectionField)
+    {
+        $this->sectionFields[] = $SectionField; 
+    }
 }

@@ -7,7 +7,8 @@ namespace  ItForFree\WpAddons\Core\Admin\Settings\SettingsPage\Section;
  * 
  * В основе идеи пример: http://fkn.ktu10.com/?q=node/10801
  */
-class SettingsPageSection {
+class SettingsPageSection 
+{
     
     protected $strId = '';
     protected $title= '';
