@@ -99,32 +99,4 @@ class HierarhicalUrls
 //        flush_rewrite_rules(); // в продакшене не нужно (сброс маршрутов)
         add_filter('generate_rewrite_rules', $taxonomyRewriteRouteHandler, 0);
     }
-    
-    public static function bkr()
-    {
-        
-         if ( is_tax() ) {
-            echo "<pre>";
-                    // Get the current term
-            $term = get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) );
-            
-            vpre($term, 'Текущий элемент таксономии');
-            
-            $parents = TaxonomyCategory::getParentsList($term);
-            
-//            vpre($parents, 'Родители');
-            
-            if(!empty($parents)):
-//            $parents = array_reverse($parents);
-            // For each parent, create a breadcrumb item
-            foreach ($parents as $parent):
-                $url = get_bloginfo('url').'/'.$parent->taxonomy.'/'.$parent->slug;
-                echo '<li><a href="'.$url.'">'.$parent->name.'</a></li>';
-            endforeach;
-            endif;
-            // Display the current term in the breadcrumb
-            echo '<li>'.$term->name.'</li>';
-            echo "</pre>";
-        }
-    }
 }

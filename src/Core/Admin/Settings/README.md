@@ -5,7 +5,7 @@
 
 `\ItForFree\WpAddons\Core\Admin\Settings\SettingsPage\SettingsPage`
 
-для описания страницы настроек, например решение вида:
+для описания страницы настроек, например, решение вида:
 
 ```php
 use ItForFree\WpAddons\Core\Admin\Settings\SettingsPage\SettingsPage;
