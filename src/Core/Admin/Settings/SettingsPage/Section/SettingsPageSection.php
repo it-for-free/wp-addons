@@ -2,6 +2,7 @@
 
 namespace  ItForFree\WpAddons\Core\Admin\Settings\SettingsPage\Section;
 
+
 /**
  * Класс для описания секции страницы настроек
  * 
@@ -22,6 +23,12 @@ class SettingsPageSection
     protected $settingsPage = null;
     
     public $content = '';
+    
+    /**
+     * Поля секций
+     * @var \ItForFree\WpAddons\Core\Admin\Settings\SettingsPage\Section\Filed\BaseSectionField[] 
+     */
+    protected $Fields;
 
     
     /**
@@ -54,17 +61,19 @@ class SettingsPageSection
     {
         return $this->strId;
     }
-
+    
+ 
     /**
-     * Обертка для более краткого получаения объекта (стандартизация некоторых машинных имен)
+     * Добавление поля в раздел страницы (секцию)
      * 
-     * @param \ItForFree\WpAddons\Core\Admin\Settings\SettingsPage\SettingsPage $SettingsPage
+     * @param \ItForFree\WpAddons\Core\Admin\Settings\SettingsPage\Section\Filed\BaseSectionField $SectionField  поле страницы 
+     *   (раздела страницы - секции), указанного класса или класса- наследника
+     * @return $this
      */
-    public static function getForSettingsPage($SettingsPage, $sectionTitle, $sectionContent)
+    public function addSectionField($SectionField)
     {
-        $strId = $SettingsPage->getIdStr() . '_settings';
-        return new SettingsPageSection($strId, $sectionTitle, 
-            $SettingsPage->slug, $sectionContent);
+        $this->Fields[] = $SectionField;
+        return $this;
     }
     
     /**
@@ -74,7 +83,6 @@ class SettingsPageSection
      */
     public function register()
     {
-        
         $content = $this->content;
         // Валидация настроек
         $sectionContentCallback = function() use ($content) {
@@ -82,6 +90,10 @@ class SettingsPageSection
         };
 
         add_settings_section($this->strId, $this->title, $sectionContentCallback, $this->pageSlug);
+        
+        foreach ($this->Fields as $Field) {
+            $Field->register();       
+        }
     }
     
     protected function getContentCallback()

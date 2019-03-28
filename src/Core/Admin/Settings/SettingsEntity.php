@@ -7,8 +7,16 @@ namespace  ItForFree\WpAddons\Core\Admin\Settings;
  */
 class SettingsEntity 
 {
-    
+    /**
+     *
+     * @var srting имя группы настроек
+     */
     protected $groupName = '';
+    
+    /**
+     *
+     * @var srting собственное имя
+     */
     protected $name= '';
     
     /**
@@ -40,18 +48,6 @@ class SettingsEntity
         return $this->name;
     }
 
-    /**
-     * 
-     * @param \ItForFree\WpAddons\Core\Admin\Settings\SettingsPage\SettingsPage $SettingsPage
-     * @param callable $validateCallback необязательный колбек валидации значения
-     * @return \ItForFree\WpAddons\Core\Admin\Settings\SettingsEntity
-     */
-    public static function getForSettingsPage($SettingsPage, $validateCallback = null)
-    {
-        $name = $SettingsPage->getIdStr() . '_options';
-        return new SettingsEntity($name,  $name, $validateCallback);
-    }
-    
     /**
      * Регистрирует сущность.
      * 

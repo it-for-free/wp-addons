@@ -1,9 +1,11 @@
 <?php
 
-namespace  ItForFree\WpAddons\Core\Admin\Settings\SettingsPage\Section\Filed;
+namespace  ItForFree\WpAddons\Core\Admin\Settings\SettingsPage\Section\Field;
 
 /**
  * Базовый класс  для работы с полем страницы настроек (относящимся к какой-либо секции этой страницы)
+ * 
+ * В потомках надо, как минимум переопределить getFieldHtmlCallback()
  * 
  */
 class BaseSectionField 
@@ -38,7 +40,7 @@ class BaseSectionField
     public function __construct($SettingsPageSection, $machineFiledName, $fieldTitle) 
     {
         
-        if (empty($this->SettingsPageSection->getSettingsPage()->getSettingsEntity())) {
+        if (empty($SettingsPageSection->getSettingsPage()->getSettingsEntity())) {
             throw new NoSettingsEntityForPageException();
         }
         
@@ -46,7 +48,8 @@ class BaseSectionField
         $this->pageSlug = $SettingsPageSection->getSettingsPage()->getSlug();
         $this->strId = $SettingsPageSection->getSettingsPage()->getIdStr() 
                 . '_' . $machineFiledName;
-        $this->SettingsPageSection = $SettingsPageSection;     
+        $this->SettingsPageSection = $SettingsPageSection;   
+        $this->machineName = $machineFiledName;
     }
 
     
@@ -56,7 +59,7 @@ class BaseSectionField
      */
     public function register()
     {
-        add_settings_field($this->strId, $this->title, $$this->getFieldHtmlCallback(),
+        add_settings_field($this->strId, $this->title, $this->getFieldHtmlCallback(),
             $this->pageSlug, $this->SettingsPageSection->getStrId());
     }
     
@@ -71,15 +74,7 @@ class BaseSectionField
         $fieldHtmlCallback = function () use ($optionName, $filedName) {
             $options = get_option($optionName);
 
-            $disabled_taxonomies = array('nav_menu', 'link_category', 'post_format');
-            foreach (get_taxonomies() as $tax): 
-                if (in_array($tax, $disabled_taxonomies)) {
-                    continue;
-                }    
-                ?>
-                <input type="checkbox" name="<?= $optionName ?>[<?= $filedName ?>][<?php echo $tax ?>]" value="<?php echo $tax ?>" <?php checked(isset($options[$filedName][$tax])); ?> /> <?php echo $tax; ?><br />
-            <?php
-            endforeach;
+            echo "Это БАЗОВОЕ поле, используйте классы-потомки!";
         };
         
         return $fieldHtmlCallback;
