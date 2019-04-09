@@ -5,9 +5,19 @@
     "keywords": ["wordpress", "wp", "addons module"],
     "homepage": "http://fkn.ktu10.com/?q=node/4191",
      
+     
+    "require": {
+        "it-for-free/rusphp": "v2.0.8"      
+    },
     "autoload": {
         "psr-4": {
             "ItForFree\\WpAddons\\": "src"
         }
-    } 
+    },
+    "repositories": [
+        {
+           "type": "vcs",
+           "url": "https://github.com/it-for-free/rusphp"
+        }
+    ]
 }
