@@ -39,7 +39,7 @@ class HierarhicalUrls
                      $post_link = str_replace("%$taxonomyName%", 
                             TaxonomyCategory::getHierarhicalUrl($firstRelatedTaxonomyItem), $post_link);
                  } else {
-                     $post_link = str_replace("%$taxonomyName%", 'uncategorized', $post_link);
+                     $post_link = str_replace("%$taxonomyName%/", '', $post_link);
                  }
              }
              return $post_link;
@@ -85,14 +85,19 @@ class HierarhicalUrls
                                     . '/' . TaxonomyCategory::getHierarhicalUrl(
                                         $term, $terms) . '/?$'] =  'index.php?' . $term->taxonomy . '=' . $term->slug;
                             }
+                            /*ВАЖНО! (уточняем правило, которое говорит по 
+                             * этому маршруту искать элемент таксономии, мы же будем искать запись без категории)
+                             *  добавляем спец-правило для тех записей, что не относятся ни к одной категории */
+                            $rules[$object_type . '/([^/]+?)/?$'] =  'index.php?post_type=' . $object_type . '&name=$matches[1]'; 
                         }
                     }
                 }
             }
-            // merge with global rules
         //    ppre('------------');
-//            ppre($rules);
+//            vdie($rules);
+            // merge with global rules
             $wp_rewrite->rules = $rules + $wp_rewrite->rules;
+//            vdie($wp_rewrite->rules);
 //            ppre($wp_rewrite->rules);
         };
 
