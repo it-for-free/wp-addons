@@ -2,7 +2,8 @@
     "name": "it-for-free/wp-addons",
     "type": "cms",
     "description": "wordpress addons",
-    "keywords": ["wordpress", "wp", "addons module"],
+    "keywords": ["wordpress", "wp", "addons module", "oop",
+    "breadcrumbs", "хлебные коршки"],
     "homepage": "http://fkn.ktu10.com/?q=node/4191",
      
      
