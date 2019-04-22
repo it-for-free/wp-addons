@@ -17,7 +17,7 @@ class Template
      */
     public static function getCurrentTemplatePath()
     {
-        return get_page_template();  
+        return get_page_templates(); 
     }
     
     /**
@@ -27,5 +27,10 @@ class Template
     public static function printCurrentTemplatePath()
     {
         ppre(get_page_template(), 'Текущий шаблон');  
+    }
+    
+    public static function printTemplateInfo()
+    {
+        ppre(get_template_directory());
     }
 }
