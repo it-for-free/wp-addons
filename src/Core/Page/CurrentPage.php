@@ -21,7 +21,7 @@ class CurrentPage
     
     
     /**
-     * Отсится ли данная страница к таксономии (опционально можно передать тип)
+     * Относится ли данная страница к таксономии (опционально можно передать тип)
      * 
      * @param  string|array $taxonomyTypeName  Taxonomy slug or slugs - подходящие типы/тип
      * @return bool
