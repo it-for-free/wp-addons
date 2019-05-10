@@ -3,7 +3,7 @@
 namespace ItForFree\WpAddons\Core\Taxonomy;
 
 /**
- * Класс для работы с категрией (конкретной записью, таксономии)
+ * Класс для работы с категрией (конкретной записью, таксономии: Term-ом)
  * 
  * @todo Оптимизировать поиск родителя опционально передавая массив, в котором будем искать
  */
@@ -65,7 +65,6 @@ class TaxonomyCategory
         return $parents;
     }
     
-    
     /**
      * Вернёт объект таксономии,  к которой относится переданный элемент $WP_Term
      * 
@@ -75,5 +74,17 @@ class TaxonomyCategory
     public static function getTaxonomy($WP_Term)
     {
         return  Taxonomy::getByName($WP_Term->taxonomy);
+    }
+    
+    /**
+     * Вернет текущий элемент таксономии
+     * 
+     * (на основе get_query_var())
+     * 
+     * @return WP_Term
+     */
+    public static function getCurrentTerm()
+    {
+        return get_term_by('slug', get_query_var('term'), get_query_var('taxonomy'));
     }
 }
