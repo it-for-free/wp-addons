@@ -50,4 +50,21 @@ class Taxonomy
             return $this->wpTaxonomy->name;
         }
     }
+    
+    /**
+     * Вернет элементы данной таксономии (по умолчанию - все)
+     * 
+     * @param type $options опции поиска  - передаются в стандартную get_terms()
+     * @return WP_Term[]
+     */
+    public function getTerms($options = array())
+    {
+        if (empty($options)) {
+           $options = array('hide_empty' => false);
+        }
+        $options  = array_merge($options, 
+                array('taxonomy' => $this->wpTaxonomy->name));
+        $terms = get_terms($options);
+        return $terms;
+    }
 }
