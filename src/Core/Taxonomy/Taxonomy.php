@@ -67,4 +67,17 @@ class Taxonomy
         $terms = get_terms($options);
         return $terms;
     }
+    
+    /**
+     * Порверит что текущая страницы - то страница таксономии. (В т.ч. конкретной таксономии и/или конкретного её тега)
+     * (обертка над is_tax())
+     * 
+     * @param string|array     $taxonomy Опционально. Taxonomy slug or slugs.
+     * @param int|string|array $term     Опционально. Term ID, name, slug or array of Term IDs, names, and slugs.
+     * @return boolean
+     */
+    public static function is($taxonomy = '', $term = '')
+    {
+        return is_tax($taxonomy, $term);
+    }
 }
