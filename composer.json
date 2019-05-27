@@ -9,7 +9,7 @@
      
      
     "require": {
-        "it-for-free/rusphp": "v2.*"      
+        "it-for-free/rusphp": "^v2.1.5"      
     },
     "autoload": {
         "psr-4": {
