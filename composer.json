@@ -3,7 +3,8 @@
     "type": "library",
     "description": "Wordpress addons library",
     "keywords": ["wordpress", "wp", "addons module", "oop",
-    "breadcrumbs", "хлебные коршки"],
+    "breadcrumbs", "хлебные коршки",
+    "metabox", "meta box image"],
     "homepage": "http://fkn.ktu10.com/?q=node/4191",
      
      
