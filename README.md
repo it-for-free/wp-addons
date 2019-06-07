@@ -27,4 +27,5 @@ WordPress version (версия): 5+
 ## Хелперы 
 
 * [`Helper/Breadcrumbs` для работы с хлебными крошками](src/Helper/Breadcrumbs/README.md).
-* [Пространство `Helper/Debug` для отладки](src/Helper/Debug/README.md) приложеня на WP 
+* [Пространство `Helper/Debug` для отладки](src/Helper/Debug/README.md) приложеня на WP. 
+* [`Helper/Assets` дял управления JS и CSS файлами](src/Helper/Assets/README.md) (подключения их на странице).
