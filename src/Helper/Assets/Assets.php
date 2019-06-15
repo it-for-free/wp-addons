@@ -68,7 +68,7 @@ class Assets
             wp_enqueue_script($handle, $src, $deps, $ver, $in_footer);
         };
 
-        add_action('wp_head', $handler);
+        add_action('wp_enqueue_scripts', $handler);
     }
     
     
